@@ -21,7 +21,7 @@ class Blockchain {
     this.getBlockHeight().then(function(height) {
       if (height == -1) {
         const block = self.createGenesisBlock();
-        self.addNewBlock(block);
+        self.addBlock(block);
       }
     });
   }
@@ -37,7 +37,7 @@ class Blockchain {
   }
 
   // Add new blockƒ
-  addNewBlock(newBlock) {
+  addBlock(newBlock) {
     let self = this;
     return this.getBlockHeight().then(function(height) {
       newBlock.height = height + 1;
@@ -90,13 +90,19 @@ class Blockchain {
 
   // Validate Blockchain
   validateChain() {
+    let errorLog = [];
     let self = this;
     return this.getBlockHeight().then(function(height) {
       const promises = [];
 
       // blocks validation
       for (let i = 0; i < height; i++) {
-        let pr = self.validateBlock(i);
+        let pr = self.validateBlock(i).then(function(valid) {
+          if (!valid) {
+            errorLog.push(i);
+          }
+          return valid;
+        });
         promises.push(pr);
       }
 
@@ -112,7 +118,11 @@ class Blockchain {
                   .getBlock(prevBlock.height + 1)
                   .then(function(block) {
                     //console.log(prevBlock.height, block.height);
-                    return block.previousHash === prevBlock.hash;
+                    let toReturn = block.previousHash === prevBlock.hash;
+                    if (!toReturn) {
+                      errorLog.push(block.height);
+                    }
+                    return toReturn;
                   });
               })
             );
@@ -130,6 +140,12 @@ class Blockchain {
         const validation = results.reduce(function(acc, current) {
           return acc && current;
         });
+        if (errorLog.length > 0) {
+          console.log("Block errors = " + errorLog.length);
+          console.log("Blocks: " + errorLog);
+        } else {
+          console.log("No errors detected");
+        }
         return validation;
       });
     });
@@ -138,6 +154,7 @@ class Blockchain {
   // Utility Method to Tamper a Block for Test Validation
   // This method is for testing purpose
   _modifyBlock(height, block) {
+    block.height = height;
     let self = this;
     return new Promise((resolve, reject) => {
       self.chain

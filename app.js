@@ -7,7 +7,7 @@ let bc = new BC.Blockchain();
   setTimeout(function() {
     //Test Object
     let objAux = { id: i, data: `Data #: ${i}` };
-    bc.addNewBlock(new B.Block(`teste ${i}`))
+    bc.addBlock(new B.Block(`teste ${i}`))
       .then(result => {
         if (!result) {
           console.log("Error Adding data");
