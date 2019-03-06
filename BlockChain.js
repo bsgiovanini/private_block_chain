@@ -96,7 +96,7 @@ class Blockchain {
       const promises = [];
 
       // blocks validation
-      for (let i = 0; i < height; i++) {
+      for (let i = 0; i <= height; i++) {
         let pr = self.validateBlock(i).then(function(valid) {
           if (!valid) {
             errorLog.push(i);
