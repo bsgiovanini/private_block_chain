@@ -1,40 +1,30 @@
 const BC = require("./BlockChain.js");
 const B = require("./Block.js");
 
-let bc = new BC.Blockchain();
+module.exports = theLoop;
 
-(function theLoop(i) {
-  setTimeout(function() {
+async function theLoop(i, bc) {
+  setTimeout(async function() {
     //Test Object
-    let objAux = { id: i, data: `Data #: ${i}` };
-    bc.addBlock(new B.Block(`teste ${i}`))
-      .then(result => {
-        if (!result) {
-          console.log("Error Adding data");
-        } else {
-          console.log(result);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let result = await bc.addBlock(new B.Block(`teste ${i}`));
+    if (!result) {
+      console.log("Error Adding data");
+    } else {
+      console.log(result);
+    }
     i++;
     if (i < 10) {
-      theLoop(i);
+      await theLoop(i, bc);
     } else {
-      bc.validateChain()
-        .then(isValid => {
-          console.log(`validation is: ${isValid}`);
-          const mblock = new B.Block(`teste 40`);
-          bc._modifyBlock(4, mblock).then(function(m) {
-            bc.validateChain().then(isValid2 => {
-              console.log(`validation is: ${isValid2}`);
-            });
-          });
-        })
-        .catch(err => {
-          console.log(err);
+      let isValid = await bc.validateChain();
+
+      console.log(`validation is: ${isValid}`);
+      /*const mblock = new B.Block(`teste 40`);
+      bc._modifyBlock(4, mblock).then(function(m) {
+        bc.validateChain().then(isValid2 => {
+          console.log(`validation is: ${isValid2}`);
         });
+      });*/
     }
   }, 100);
-})(0);
+}

@@ -2,14 +2,18 @@
   "name": "project_2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "crypto-js": "^3.1.9-1",
-    "level": "^4.0.0"
+    "hapi": "^18.1.0",
+    "joi": "^14.3.1",
+    "level": "^4.0.0",
+    "rimraf": "^2.6.3"
   }
 }
