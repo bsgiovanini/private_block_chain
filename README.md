@@ -1,7 +1,7 @@
 # Project 3: Connect Private Blockchain to Front-End Client via APIs
 
 Project created as an assignment for Udacity BlockChain Developer Nanodegree Program - Project 3.
-RESTful API using the Hapi.js Node.js framework which interfaces with the private blockchain. The package JOI was used to support input validation
+RESTful API using the [Hapi.js](https://hapijs.com) Node.js framework which interfaces with the private blockchain. The package [JOI](https://github.com/hapijs/joi) was used to support input validation
 
 ## Getting Started
 
