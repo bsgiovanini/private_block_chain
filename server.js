@@ -2,7 +2,6 @@
 
 const Hapi = require("hapi");
 const init = require("./app");
-const rimraf = require("rimraf");
 const Joi = require("joi");
 
 const BC = require("./BlockChain.js");
@@ -22,8 +21,20 @@ server.route({
   path: "/block/{height}",
   handler: async function(request, h) {
     const height = request.params.height;
-    const block = bc.getBlock(height);
-    return block;
+    const maxheight = await bc.getBlockHeight();
+    const result = Joi.validate(
+      height,
+      Joi.number()
+        .min(0)
+        .max(maxheight)
+    );
+
+    if (result.error === null) {
+      const block = await bc.getBlock(height);
+      return block;
+    } else {
+      return "Input Validation Error";
+    }
   }
 });
 server.route({
@@ -45,7 +56,6 @@ server.route({
 // Start the server
 const start = async function() {
   try {
-    rimraf.sync("/chaindata");
     await init(0, bc);
     await server.start();
   } catch (err) {
