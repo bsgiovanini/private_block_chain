@@ -56,3 +56,9 @@ To post a specific block, access it via the POST method (using Postman or Curl),
 ```
 http://localhost:8000/block/
 ```
+
+Valid payload example
+
+```
+"Testing block with test string data"
+```
