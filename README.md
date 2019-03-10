@@ -35,7 +35,7 @@ Run this command on bash and a server will start at port 8000 with 10 blocks alr
 npm start
 ```
 
-### Accessing API methods
+### Accessing an existing block in the chain (GET)
 
 To get a specific block, access it via the GET method
 
@@ -49,7 +49,7 @@ Example
 http://localhost:8000/block/3
 ```
 
-### And coding style tests
+### And submiting a new Block to the chain (POST)
 
 To post a specific block, access it via the POST method (using Postman or Curl), specifying a text as a raw payload. If payload is not informed, a message of "Invalid Input" will be returned from the POST request
 
