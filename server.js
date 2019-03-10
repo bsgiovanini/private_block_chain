@@ -9,10 +9,6 @@ const B = require("./Block.js");
 
 let bc = new BC.Blockchain();
 
-let joiPostSchema = {
-  body: Joi.string().required()
-};
-
 // Create a server with a host and port
 const server = Hapi.server({
   host: "localhost",
