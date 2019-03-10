@@ -9,6 +9,10 @@ const B = require("./Block.js");
 
 let bc = new BC.Blockchain();
 
+let joiPostSchema = {
+  body: Joi.string().required()
+};
+
 // Create a server with a host and port
 const server = Hapi.server({
   host: "localhost",
@@ -33,7 +37,13 @@ server.route({
       const block = await bc.getBlock(height);
       return block;
     } else {
-      return "Input Validation Error";
+      return h
+        .response({
+          statusCode: 400,
+          error: "Bad Request",
+          message: "Invalid request parameter"
+        })
+        .code(400);
     }
   }
 });
@@ -41,14 +51,16 @@ server.route({
   method: "POST",
   path: "/block",
   handler: async function(request, h) {
-    const content = request.payload;
-    const result = Joi.validate(content, Joi.string().required());
-    if (result.error === null) {
-      const newBlock = new B.Block(content);
-      const created = await bc.addBlock(newBlock);
-      return created;
-    } else {
-      return "Input Validation Error";
+    const content = request.payload.body;
+    const newBlock = new B.Block(content);
+    const created = await bc.addBlock(newBlock);
+    return created;
+  },
+  options: {
+    validate: {
+      payload: {
+        body: Joi.string().required()
+      }
     }
   }
 });
