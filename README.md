@@ -60,5 +60,8 @@ http://localhost:8000/block/
 Valid payload example
 
 ```
-"Testing block with test string data"
+{
+    "body": "Testing block with test string data"
+}
+
 ```
