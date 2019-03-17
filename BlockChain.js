@@ -69,6 +69,14 @@ class Blockchain {
     return Promise.resolve(undefined);
   }
 
+  getBlockByHash(hash) {
+    return this.chain.getByHash(hash);
+  }
+
+  listBlocksByWalletAddress(address) {
+    return this.chain.getByWalletAddress(address);
+  }
+
   // Validate if Block is being tampered by Block Height
   validateBlock(height) {
     let self = this;

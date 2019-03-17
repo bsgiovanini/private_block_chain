@@ -63,6 +63,47 @@ class LevelSandbox {
       resolveFunction = resolve;
     });
   }
+
+  getBlockByHash(hash) {
+    let self = this;
+    let block = null;
+    return new Promise(function(resolve, reject) {
+      self.db
+        .createValueStream()
+        .on("data", function(data) {
+          const dataObj = JSON.parse(data);
+          if (dataObj.hash === hash) {
+            block = data;
+          }
+        })
+        .on("error", function(err) {
+          reject(err);
+        })
+        .on("close", function() {
+          resolve(block);
+        });
+    });
+  }
+  getBlockByWalletAddress(address) {
+    let self = this;
+    let blocks = [];
+    return new Promise(function(resolve, reject) {
+      self.db
+        .createValueStream()
+        .on("data", function(data) {
+          const dataObj = JSON.parse(data);
+          if (dataObj.body && dataObj.body.address === address) {
+            blocks.push(data);
+          }
+        })
+        .on("error", function(err) {
+          reject(err);
+        })
+        .on("close", function() {
+          resolve(blocks);
+        });
+    });
+  }
 }
 
 class Chain {
@@ -79,8 +120,32 @@ class Chain {
     });
   }
 
+  getByHash(hash) {
+    let self = this;
+    return new Promise(function(resolve, reject) {
+      self.db.getBlockByHash(hash).then(function(value) {
+        if (value) {
+          resolve(Object.assign(new Block.Block(), JSON.parse(value)));
+        }
+      });
+    });
+  }
+
+  getByWalletAddress(address) {
+    let self = this;
+    return new Promise(function(resolve, reject) {
+      self.db.getBlockByWalletAddress(address).then(function(values) {
+        resolve(
+          values.map(function(value) {
+            return Object.assign(new Block.Block(), JSON.parse(value));
+          })
+        );
+      });
+    });
+  }
+
   push(key, value) {
-    return this.db.addLevelDBData(key, JSON.stringify(value).toString());
+    return this.db.addLevelDBData(key, JSON.stringify(value));
   }
 
   length() {
