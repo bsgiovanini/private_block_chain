@@ -1,4 +1,4 @@
-# Project 3: Connect Private Blockchain to Front-End Client via APIs
+# Project 4: Build a Private Blockchain Notary Service
 
 Project created as an assignment for Udacity BlockChain Developer Nanodegree Program - Project 4.
 RESTful API using the [Hapi.js](https://hapijs.com) Node.js framework which interfaces with the private blockchain. The package [JOI](https://github.com/hapijs/joi) was used to support input validation
@@ -41,23 +41,11 @@ Run this command on bash and a server will start at port 8000 with 10 blocks alr
 npm start
 ```
 
-### Accessing an existing block in the chain (GET)
-
-To get a specific block, access it via the GET method
-
-```
-http://localhost:8000/block/{height}
-```
-
-Example
-
-```
-http://localhost:8000/block/3
-```
+## Blockchain ID validation routine
 
 ### Web API POST endpoint to validate request with JSON response
 
-Use the URL for the endpoint:
+To validate the request, access it via the POST method (using Postman or Curl), specifying a text as a raw payload. If payload is not informed, a message of "Invalid Input" will be returned from the POST request. Use the URL for the endpoint:
 
 ```
 http://localhost:8000/requestValidation
@@ -71,7 +59,7 @@ Example of a valid request payload:
 
 ### Web API POST endpoint validates message signature with JSON response
 
-Use the URL for the endpoint:
+To validate the signature, access it via the POST method (using Postman or Curl), specifying a text as a raw payload. If payload is not informed, a message of "Invalid Input" will be returned from the POST request. Use the URL for the endpoint:
 
 ```
 http://localhost:8000/message-signature/validate
@@ -86,9 +74,11 @@ Example of a valid request payload:
 }
 ```
 
-### And submiting a new Block to the chain (POST)
+## Star registration Endpoint
 
-To post a specific block, access it via the POST method (using Postman or Curl), specifying a text as a raw payload. If payload is not informed, a message of "Invalid Input" will be returned from the POST request
+### Submiting a new Block to the chain (POST)
+
+After validation It is possible to post a block. Access it via the POST method (using Postman or Curl), specifying a text as a raw payload. If payload is not informed or its address was not validated, an error message will be returned from the POST request
 
 ```
 http://localhost:8000/block/
@@ -106,4 +96,48 @@ Valid payload example
             }
 }
 
+```
+
+## Star Lookup
+
+### Get Star block by hash with JSON response
+
+Use the URL:
+
+```
+http://localhost:8000/stars/hash:{HASH}
+```
+
+Example:
+
+```
+http://localhost:8000/stars/hash:4639e23e3027a287a3512d6c86bb43191634d8083c1ae2e458fc45dd3987feac
+```
+
+### Get Star block by wallet address (blockchain identity) with JSON response
+
+Use the URL:
+
+```
+http://localhost:8000/stars/address:{ADDRESS}
+```
+
+Example:
+
+```
+http://localhost:8000/stars/address:1J2vezczmV3U7rdzG9XdmQjfzUFpWg6zfJ
+```
+
+### Get star block by star block height with JSON response
+
+To get a specific block, access it via the GET method
+
+```
+http://localhost:8000/block/{height}
+```
+
+Example
+
+```
+http://localhost:8000/block/3
 ```

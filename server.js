@@ -127,6 +127,14 @@ server.route({
         );
       }
       return createdObj;
+    } else {
+      return h
+        .response({
+          statusCode: 400,
+          error: "Bad Request",
+          message: "Block validation error"
+        })
+        .code(400);
     }
   },
   options: {
