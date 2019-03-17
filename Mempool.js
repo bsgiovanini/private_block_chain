@@ -6,7 +6,7 @@ module.exports = function() {
     this.timeoutRequests = {};
     this.requestValidationTimeStamp = {};
     this.mempoolValid = {};
-    this.TimeoutRequestsWindowTime = 5 * 60 * 1000; //TODO 5 *
+    this.TimeoutRequestsWindowTime = 5 * 60 * 1000;
   };
 
   Mempool.prototype.addRequestValidation = function async(address) {
