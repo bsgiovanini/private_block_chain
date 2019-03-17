@@ -93,5 +93,10 @@ module.exports = function() {
     return this.mempoolValid[address];
   };
 
+  Mempool.prototype.resetAddressValidation = function async(address) {
+    delete this.mempoolValid[address];
+    this.removeValidationRequest(address);
+  };
+
   return new Mempool();
 };

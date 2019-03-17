@@ -115,11 +115,12 @@ server.route({
           dec: content.star.dec,
           //mag: content.star.mag,
           //cen: content.star.cen,
-          story: Buffer(content.star.story).toString("hex")
+          story: Buffer.from(content.star.story).toString("hex")
         }
       };
       const newBlock = new B.Block(body);
       const created = await bc.addBlock(newBlock);
+      mempool.resetAddressValidation(content.address);
       const createdObj = JSON.parse(created);
       if (createdObj && createdObj.body && createdObj.body.star) {
         createdObj.body.star.storyDecoded = hex2ascii(
