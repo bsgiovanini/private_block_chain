@@ -4,6 +4,7 @@ const Hapi = require("hapi");
 const init = require("./app");
 const Joi = require("joi");
 const hex2ascii = require("hex2ascii");
+const Boom = require("boom");
 
 const BC = require("./BlockChain.js");
 const B = require("./Block.js");
@@ -40,13 +41,7 @@ server.route({
       }
       return block;
     } else {
-      return h
-        .response({
-          statusCode: 400,
-          error: "Bad Request",
-          message: "Invalid request parameter"
-        })
-        .code(400);
+      return Boom.badRequest("invalid request parameter");
     }
   }
 });
@@ -65,13 +60,7 @@ server.route({
       }
       return block;
     } else {
-      return h
-        .response({
-          statusCode: 400,
-          error: "Bad Request",
-          message: "Invalid request parameter"
-        })
-        .code(400);
+      return Boom.badRequest("invalid request parameter");
     }
   }
 });
@@ -91,13 +80,7 @@ server.route({
         return block;
       });
     } else {
-      return h
-        .response({
-          statusCode: 400,
-          error: "Bad Request",
-          message: "Invalid request parameter"
-        })
-        .code(400);
+      return Boom.badRequest("invalid request parameter");
     }
   }
 });
@@ -129,13 +112,7 @@ server.route({
       }
       return createdObj;
     } else {
-      return h
-        .response({
-          statusCode: 400,
-          error: "Bad Request",
-          message: "Block validation error"
-        })
-        .code(400);
+      return Boom.badRequest("Block validation error");
     }
   },
   options: {
