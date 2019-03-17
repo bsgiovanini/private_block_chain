@@ -1,7 +1,7 @@
 # Project 4: Build a Private Blockchain Notary Service
 
 Project created as an assignment for Udacity BlockChain Developer Nanodegree Program - Project 4.
-RESTful API using the [Hapi.js](https://hapijs.com) Node.js framework which interfaces with the private blockchain. The package [JOI](https://github.com/hapijs/joi) was used to support input validation
+RESTful API using the [Hapi.js](https://hapijs.com) Node.js framework which interfaces with the private blockchain. The package [JOI](https://github.com/hapijs/joi) was used to support input validation and [Boom](https://github.com/hapijs/boom) was used for http code handling.
 
 ## Getting Started
 
